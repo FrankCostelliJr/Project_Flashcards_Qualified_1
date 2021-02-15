@@ -63,15 +63,27 @@ function AddCard() {
             placeholder="Front side of card"
             value={formData.front}
             onChange={handleChange}
-            required
-          >
+            required>
           </textarea>
           <label htmlFor="back"><h5>Back</h5></label>
+          <textarea 
+            className="form-control"
+            name="back"
+            rows="3"
+            placeholder="Back side of card"
+            value={formData.back}
+            onChange={handleChange}
+            required>
+          </textarea>
+        </div>
+        <div>
+          <Link to={`/decks/${deckId}`} className='btn btn-secondary'>Done</Link>
+          <button className="btn btn-primary" type='submit'>Save</button>
         </div>
       </form>
       
     </div>
-  )
+  );
 }
 
 export default AddCard
