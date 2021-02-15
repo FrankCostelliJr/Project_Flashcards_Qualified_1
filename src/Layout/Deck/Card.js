@@ -22,8 +22,9 @@ function Card({ id, front, back, updateCards }) {
             <p className="card-text" style={{flex: '1', marginRight: '15px'}}>{front}</p>
             <p className="card-text" style={{flex: '1'}}>{back}</p>
           </div>
-          <div>
-            <Link to={`${url}/cards/${id}/edit`} className='btn btn-secondary'>Edit</Link>
+          <div className='d-flex justify-content-end' style={{marginTop: '20px'}}>
+            <Link to={`${url}/cards/${id}/edit`} className='btn btn-secondary' style={{marginRight: '10px'}}>Edit</Link>
+            <button className='btn btn-danger' onClick={handleDeleteCard}>Delete</button>
           </div>
         </div>
       </div>
