@@ -43,6 +43,50 @@ function EditDeck() {
 
   return (
     <div>
+      <nav aria-label='breadcrumb'>
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item text-primary">
+            <Link to='/'>Home</Link>
+          </li>
+          <li className="breadcrumb-item text-primary">
+            <Link to={`/decks/${deckId}`}>{deck.name}</Link>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            Edit Deck
+          </li>
+        </ol>
+      </nav>
+      <h1>Edit Deck</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="nameInput"><h5>Name</h5></label>
+          <input 
+            type="text"
+            name="name"
+            className="form-control"
+            placeholder="Deck Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="descriptionInput"><h5>Description</h5></label>
+          <textarea
+            name="description"
+            rows='3'
+            className='form-control'
+            placeholder='Brief description of the deck'
+            value={formData.description}
+            onChange={handleChange}
+            required>
+          </textarea>
+        </div>
+        <div>
+          <Link to={`/decks/${deckId}`} className='btn btn-secondary'>Cancel</Link>
+          <button type='submit' className='btn btn-primary'>Submit</button>
+        </div>
+      </form>
       
     </div>
   )
