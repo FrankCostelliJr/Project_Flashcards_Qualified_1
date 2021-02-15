@@ -1,45 +1,79 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { listCards } from '../../utils/api/index';
-import { readDeck } from '../../utils/api/index';
-import CardList from './CardList';
-import BreadCrumb from './BreadCrumb';
-import DeckOverview from './DeckOverview';
+import { useParams, Link, useHistory } from 'react-router-dom';
+import { readDeck, deleteDeck, deleteCard } from '../../utils/api/index';
+import Card from './Card';
 
-
-function ViewCards() {
-  const [deck, setDeck] = useState({});
-  const [cardList, setCardList] = useState([]);
+function Deck({ updateDecks }) {
   const { deckId } = useParams();
+  const history = useHistory();
+
+  const [deck, setDeck] = useState({});
+  const [numCards, setNumCards] = useState(0);
+
+  const updateCards = (value) => {
+    setNumCards(() => numCards + value);
+  };
+
+  const handleDeleteDeck = async () => {
+    const deckToDelete = window.confirm("Delete this deck? \n \n You will not be able to recover it.");
+    if(deckToDelete) {
+      await deleteDeck(deck.id);
+      updateDecks(-1);
+      history.push('/');
+    }
+  };
 
   useEffect(() => {
     const abortController = new AbortController();
     const loadDeck = async () => {
-      const thisDeck = await readDeck(deckId, abortController.signal);
-      setDeck(() => thisDeck);
-    }
+      const deck = await readDeck(deckId, abortController.signal);
+      setDeck(() => deck);
+    };
     loadDeck();
-    return () => abortController.abort();
-  }, [deckId]);
+    return () => {
+      abortController.abort();
+    };
+  }, [numCards, deckId]);
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const loadCards = async () => {
-      const cards = await listCards(deckId, abortController.signal);
-      setCardList(() => cards);
-    }
-    loadCards();
-    return () => abortController.abort();
-  }, [deckId]);
-  
-  return (
-    <div>
-      <h1>Cards</h1>
-      <BreadCrumb deck={deck} />
-      <DeckOverview deck={deck} />
-      <CardList cardList={cardList} />
-    </div>
-  )
+  if(deck.id) {
+    return (
+      <div>
+        <nav aria-label='breadcrumb'>
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item text-primary"><Link to='/'>Home</Link></li>
+            <li className="breadcrumb-item active" aria-current='page'>{deck.name}</li>
+          </ol>
+        </nav>
+        <h3>{deck.name}</h3>
+        <p>{deck.description}</p>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <div>
+            <Link to={`/decks/${deck.id}/edit`} className='btn btn-secondary' style={{marginRight: '10px'}}>Edit</Link>
+            <Link to={`/decks/${deck.id}/study`} className='btn btn-primary' style={{marginRight: '10px'}}>Study</Link>
+            <Link to={`/decks/${deck.id}/cards/new`} className='btn btn-primary'>Add Cards</Link>
+          </div>
+          <div>
+            <button className='btn btn-danger' onClick={handleDeleteDeck}>Delete</button>
+          </div>
+        </div>
+        <h2 style={{marginTop: '20px'}}>Cards</h2>
+        <div>
+          {deck.cards.map(({ id, front, back }) => (
+            <Card 
+              key={id}
+              id={id}
+              front={front}
+              back={back}
+              updateCards={updateCards}
+            />
+          ))}
+        </div>
+        
+      </div>
+    )
+  } else {
+    return <p>Loading...</p>
+  }
 }
 
-export default ViewCards
+export default Deck
