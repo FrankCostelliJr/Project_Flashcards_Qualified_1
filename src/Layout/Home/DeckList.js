@@ -19,7 +19,7 @@ function DeckList({ id, name, description, cards, updateDecks }) {
       <div className="card-body">
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <h3 className="card-title">{name}</h3>
-          <p>{cards.length} Cards</p>
+          {cards.length} cards
         </div>
         <p className="card-text">{description}</p>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
