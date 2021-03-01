@@ -10,48 +10,46 @@ import Study from './Deck/Study';
 import AddCard from './Cards/AddCard';
 import EditCard from './Cards/EditCard';
 
-
 function Layout() {
-
+  const url = '/decks/';
   const [numDecks, setNumDecks] = useState(0);
 
   const updateDecks = (value) => {
     setNumDecks(() => numDecks + value)
   }
 
-
+  //Route List
   return (
     <>
       <Header />
-      <div className="container">
+      <main className="container">
         <Switch>
           <Route exact={true} path='/'>
             <Home numDecks={numDecks} updateDecks={updateDecks} />
           </Route>
-          <Route path='/decks/:deckId/study'>
+          <Route path={`${url}:deckId/study`}>
             <Study />
           </Route>
-          <Route path='/decks/new'>
+          <Route path={`${url}new`}>
             <CreateDeck />
           </Route>
-          <Route path='/decks/:deckId/edit'>
+          <Route path={`${url}:deckId/edit`}>
             <EditDeck />
           </Route> 
-          <Route exact={true} path='/decks/:deckId'>
+          <Route exact={true} path={`${url}:deckId`}>
             <Deck updateDecks={updateDecks} />
           </Route>
-          <Route path='/decks/:deckId/cards/:cardId/edit'>
+          <Route path={`${url}:deckId/cards/:cardId/edit`}>
             <EditCard />
           </Route>
-          <Route path='/decks/:deckId/cards/new'>
+          <Route path={`${url}:deckId/cards/new`}>
             <AddCard />
           </Route>
           <Route>
             <NotFound />
           </Route>
         </Switch>
-
-      </div>
+      </main>
     </>
   );
 }

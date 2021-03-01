@@ -15,7 +15,7 @@ function DeckList({ id, name, description, cards, updateDecks }) {
   }
 
   return (
-    <div className='card' style={{marginTop: '10px'}}>
+    <section className='card' style={{marginTop: '10px'}}>
       <div className="card-body">
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
           <h3 className="card-title">{name}</h3>
@@ -32,8 +32,7 @@ function DeckList({ id, name, description, cards, updateDecks }) {
           </div>
         </div>
       </div>
-      
-    </div>
+    </section>
   )
 }
 

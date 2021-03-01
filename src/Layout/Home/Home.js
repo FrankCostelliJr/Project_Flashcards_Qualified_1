@@ -22,7 +22,7 @@ function Home({ numDecks, updateDecks }) {
 
 
   return (
-    <div>
+    <section>
       <Link to='/decks/new' className='btn btn-primary btn-lg'>Create Deck</Link>
       {decks.map(({ id, name, description, cards }) => (
         <DeckList 
@@ -34,7 +34,7 @@ function Home({ numDecks, updateDecks }) {
           cards={cards}
         />
       ))} 
-    </div>
+    </section>
   )
 }
 

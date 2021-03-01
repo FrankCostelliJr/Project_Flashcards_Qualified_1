@@ -22,8 +22,9 @@ function CreateDeck() {
     history.push(`/decks/${newDeck.id}`);
   };
 
+  //todo: Move styles to a stylesheet
   return (
-    <div>
+    <section>
       <nav aria-label='breadcrumb'>
         <ol className="breadcrumb">
           <li className="breadcrumb-item text-primary">
@@ -67,7 +68,7 @@ function CreateDeck() {
           <button type='submit' className='btn btn-primary'>Submit</button>
         </div>
       </form>
-    </div>
+    </section>
   )
 }
 
